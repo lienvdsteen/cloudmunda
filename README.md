@@ -59,6 +59,8 @@ of overhead to use a business process engine for this, but it's just to show how
 communicating with Slack, you'd need a Slack workspace. You can also change the code in the example to send an email or
 just write something in the logs.
 
+You can find all the code [here](https://github.com/lienvdsteen/cloudmunda-demo).
+
 ### Add Slack and Cloudmunda gem
 In your Gemfile add this line
 
