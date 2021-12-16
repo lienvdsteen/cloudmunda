@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0rbumvm" targetNamespace="http://bpmn.io/schema/bpmn" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="1.2.0">
+  <bpmn:process id="cloudmunda-demo" name="cloudmunda-demo" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Webhook received">
+      <bpmn:outgoing>Flow_0easrsr</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0easrsr" sourceRef="StartEvent_1" targetRef="Activity_0le34m7" />
+    <bpmn:endEvent id="Event_0a948ov" name="Webhook processed">
+      <bpmn:incoming>Flow_1g4bjdg</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1g4bjdg" sourceRef="Activity_0le34m7" targetRef="Event_0a948ov" />
+    <bpmn:serviceTask id="Activity_0le34m7" name="Send slack message to announce">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="webhook-slack-announce" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0easrsr</bpmn:incoming>
+      <bpmn:outgoing>Flow_1g4bjdg</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="cloudmunda-demo">
+      <bpmndi:BPMNEdge id="Flow_0easrsr_di" bpmnElement="Flow_0easrsr">
+        <di:waypoint x="215" y="97" />
+        <di:waypoint x="270" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1g4bjdg_di" bpmnElement="Flow_1g4bjdg">
+        <di:waypoint x="370" y="97" />
+        <di:waypoint x="432" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="79" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="174" y="122" width="47" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0a948ov_di" bpmnElement="Event_0a948ov">
+        <dc:Bounds x="432" y="79" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="425" y="122" width="51" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1qerp1u_di" bpmnElement="Activity_0le34m7">
+        <dc:Bounds x="270" y="57" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
