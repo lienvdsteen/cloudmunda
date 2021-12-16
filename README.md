@@ -207,5 +207,6 @@ Everyone interacting in the Cloudmunda project's codebases, issue trackers, chat
 
 ## Credits
 
-This gem is build on top of what @gottfrois had build in his [beez](https://github.com/gottfrois/beez) gem. Everything in
-this gem related to the Ruby workers is a taken from that gem. 👏
+This gem is build on top of what [@gottfrois](https://github.com/gottfrois/) had build in his [beez](https://github.com/gottfrois/beez) 
+gem. Everything in this gem related to the Ruby workers is a taken from that gem. 👏 Cloudmunda would **not** be 
+possible without this.
