@@ -22,7 +22,16 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+Cloudmunda.configure do |config|
+  config.env = ENV['APP_ENV'] || ENV['RAILS_ENV'] || ENV['RACK_ENV'] || 'development'
+  config.require = '.'
+  config.timeout = 30
+  config.zeebe_url = ENV['ZEEBE_URL']
+  config.auth_url = ENV['ZEEBE_AUTHORIZATION_SERVER_URL']
+end
+```
+
 
 ## Development
 
