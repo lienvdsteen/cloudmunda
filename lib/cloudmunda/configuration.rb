@@ -23,7 +23,7 @@ module Cloudmunda
       @env = ENV["APP_ENV"] || ENV["RAILS_ENV"] || ENV["RACK_ENV"] || "development"
       @logger = Logger.new($stdout)
       @require = "."
-      @timeout = 30
+      @timeout = @env == 'development' ? 5 : 30
       @zeebe_url = ENV['ZEEBE_URL']
       @auth_url = ENV['ZEEBE_AUTHORIZATION_SERVER_URL']
       @client_id = ENV['ZEEBE_CLIENT_ID']
