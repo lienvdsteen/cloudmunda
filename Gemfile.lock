@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cloudmunda (0.1.1)
+    cloudmunda (0.1.2)
       concurrent-ruby (~> 1.0)
       rest-client (~> 2.0)
       zeebe-client (~> 0.16)
@@ -98,7 +98,7 @@ GEM
     method_source (1.0.0)
     mime-types (3.4.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2021.1115)
+    mime-types-data (3.2022.0105)
     mini_mime (1.1.2)
     minitest (5.14.4)
     netrc (0.11.0)
@@ -189,7 +189,7 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    zeebe-client (0.16.0)
+    zeebe-client (0.16.1)
       grpc (~> 1.32)
     zeitwerk (2.5.1)
 
