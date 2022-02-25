@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 
 module Cloudmunda
@@ -17,18 +19,18 @@ module Cloudmunda
       logger.info "Completed processing job #{job.type} #{job.key}"
       client.complete_job(
         jobKey: job.key,
-        variables: Hash(variables).to_json,
+        variables: Hash(variables).to_json
       )
     end
 
-    def fail_job(job, reason: "")
+    def fail_job(job, reason: '')
       logger.error "Failed processing job #{job.type} #{job.key}: #{reason}"
       client.fail_job(
         jobKey: job.key,
         retries: job.retries - 1,
-        errorMessage: reason,
+        errorMessage: reason
       )
-    rescue => e
+    rescue StandardError => e
       logger.error e.message
     end
 
@@ -176,7 +178,7 @@ module Cloudmunda
       # @return [String]
       def get_name
         name = self.name.gsub(/::/, ':')
-        name.gsub!(/([^A-Z:])([A-Z])/) { "#{$1}_#{$2}" }
+        name.gsub!(/([^A-Z:])([A-Z])/) { "#{Regexp.last_match(1)}_#{Regexp.last_match(2)}" }
         name.downcase
       end
     end

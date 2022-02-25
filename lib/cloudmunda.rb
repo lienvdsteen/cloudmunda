@@ -2,7 +2,7 @@
 
 require 'concurrent'
 
-require_relative "cloudmunda/version"
+require_relative 'cloudmunda/version'
 require_relative 'cloudmunda/loggable'
 require_relative 'cloudmunda/cli/worker'
 require_relative 'cloudmunda/configuration'
@@ -19,7 +19,7 @@ module Cloudmunda
   end
 
   def self.register_worker(worker)
-    self.workers << worker
+    workers << worker
   end
 
   def self.workers

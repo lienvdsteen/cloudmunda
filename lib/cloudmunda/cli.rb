@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'singleton'
 require 'optparse'
 require 'fileutils'
@@ -40,46 +42,47 @@ module Cloudmunda
 
     def option_parser
       OptionParser.new.tap do |p|
-        p.on "-e", "--env ENV", "Application environment" do |arg|
+        p.on '-e', '--env ENV', 'Application environment' do |arg|
           config.env = arg
         end
 
-        p.on "-i", "--client-id CLIENT_ID", "Client ID" do |arg|
+        p.on '-i', '--client-id CLIENT_ID', 'Client ID' do |arg|
           config.client_id = arg
         end
 
-        p.on "-r", "--require [PATH|DIR]", "Location of Rails application with workers or file to require" do |arg|
+        p.on '-r', '--require [PATH|DIR]', 'Location of Rails application with workers or file to require' do |arg|
           if !File.exist?(arg) ||
-              (File.directory?(arg) && !File.exist?("#{arg}/config/application.rb"))
+             (File.directory?(arg) && !File.exist?("#{arg}/config/application.rb"))
             raise ArgumentError, "#{arg} is not a ruby file nor a rails application"
           else
             config.require = arg
           end
         end
 
-        p.on "-s", "--client-secret CLIENT_SECRET", "Client Secret" do |arg|
+        p.on '-s', '--client-secret CLIENT_SECRET', 'Client Secret' do |arg|
           config.client_secret = arg
         end
 
-        p.on "-u", "--zeebe-url ZEEBE_URL", "Zeebe URL" do |arg|
+        p.on '-u', '--zeebe-url ZEEBE_URL', 'Zeebe URL' do |arg|
           config.zeebe_url = arg
         end
 
-        p.on "-U", "--zeebe-auth-url ZEEBE_AUTH_URL", "Zeebe Authorization Server URL" do |arg|
+        p.on '-U', '--zeebe-auth-url ZEEBE_AUTH_URL', 'Zeebe Authorization Server URL' do |arg|
           config.auth_url = arg
         end
 
-        p.on "-a", "--audience URL", "Zeebe Audience" do |arg|
+        p.on '-a', '--audience URL', 'Zeebe Audience' do |arg|
           config.audience = arg
         end
 
-        p.on "-T", "--use-access-token STRING", "Zeebe Audience" do |arg|
+        p.on '-T', '--use-access-token STRING', 'Zeebe Audience' do |arg|
           config.use_access_token = arg.to_s.downcase == 'true'
         end
 
-        p.on "-t", "--timeout NUM", "Shutdown timeout" do |arg|
+        p.on '-t', '--timeout NUM', 'Shutdown timeout' do |arg|
           timeout = Integer(arg)
-          raise ArgumentError, "timeout must be a positive integer" if timeout <= 0
+          raise ArgumentError, 'timeout must be a positive integer' if timeout <= 0
+
           config.timeout = timeout
         end
 
@@ -87,13 +90,13 @@ module Cloudmunda
         #   ::Cloudmuna.logger.level = ::Logger::DEBUG
         # end
 
-        p.on "-V", "--version", "Print version and exit" do |arg|
+        p.on '-V', '--version', 'Print version and exit' do |_arg|
           puts "Cloudmunda #{::Cloudmunda::VERSION}"
           exit(0)
         end
 
-        p.banner = "Usage: cloudmunda [options]"
-        p.on_tail "-h", "--help", "Show help" do
+        p.banner = 'Usage: cloudmunda [options]'
+        p.on_tail '-h', '--help', 'Show help' do
           puts p
 
           exit(1)
@@ -102,18 +105,16 @@ module Cloudmunda
     end
 
     def boot
-      ENV["RACK_ENV"] = ENV["RAILS_ENV"] = config.env
+      ENV['RACK_ENV'] = ENV['RAILS_ENV'] = config.env
 
       if File.directory?(config.require)
         require 'rails'
-        if ::Rails::VERSION::MAJOR < 6
-          raise "Cloudmunda does not supports this version of Rails"
-        else
-          require File.expand_path("#{config.require}/config/environment.rb")
-          Dir[Rails.root.join('app/jobs/**/*.rb')].each { |f| require f }
+        raise 'Cloudmunda does not supports this version of Rails' if ::Rails::VERSION::MAJOR < 6
 
-          logger.info "Booted Rails #{::Rails.version} application in #{config.env} environment"
-        end
+        require File.expand_path("#{config.require}/config/environment.rb")
+        Dir[Rails.root.join('app/jobs/**/*.rb')].sort.each { |f| require f }
+
+        logger.info "Booted Rails #{::Rails.version} application in #{config.env} environment"
       else
         require config.require
       end
@@ -122,21 +123,19 @@ module Cloudmunda
     def launch(self_read)
       @launcher = ::Cloudmunda::Launcher.new
 
-      if config.env == "development" && $stdout.tty?
-        logger.info "Starting processing, hit Ctrl-C to stop"
-      end
+      logger.info 'Starting processing, hit Ctrl-C to stop' if config.env == 'development' && $stdout.tty?
 
       begin
         launcher.start
 
-        while readable_io = IO.select([self_read])
+        while (readable_io = IO.select([self_read]))
           signal = readable_io.first[0].gets.strip
           handle_signal(signal)
         end
       rescue Interrupt
-        logger.info "Shutting down"
+        logger.info 'Shutting down'
         launcher.stop
-        logger.info "Bye!"
+        logger.info 'Bye!'
 
         exit(0)
       end
@@ -153,8 +152,8 @@ module Cloudmunda
 
     def signal_handlers
       {
-        "INT" => ->(cli) { raise Interrupt },
-        "TERM" => ->(cli) { raise Interrupt },
+        'INT' => ->(_cli) { raise Interrupt },
+        'TERM' => ->(_cli) { raise Interrupt }
       }
     end
 

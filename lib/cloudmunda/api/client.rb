@@ -15,7 +15,7 @@ module Cloudmunda
 
       def self.headers
         {
-          authorization: "Basic " + Base64.strict_encode64("#{Cloudmunda.client_id}:#{Cloudmunda.client_secret}"),
+          authorization: "Basic #{Base64.strict_encode64("#{Cloudmunda.client_id}:#{Cloudmunda.client_secret}")}"
         }
       end
 

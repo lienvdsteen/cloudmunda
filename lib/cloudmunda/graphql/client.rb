@@ -14,8 +14,9 @@ module Cloudmunda
       end
 
       def self.headers
+        access_token = Cloudmunda::API::AccessToken.create(audience_url: 'tasklist.camunda.io').access_token
         {
-          authorization: "Bearer " + Cloudmunda::API::AccessToken.create(audience_url: 'tasklist.camunda.io').access_token
+          authorization: "Bearer #{access_token}"
         }
       end
 

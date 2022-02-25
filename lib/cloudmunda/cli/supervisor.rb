@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'processor'
 
 module Cloudmunda
@@ -20,7 +22,7 @@ module Cloudmunda
     end
 
     def quiet
-      logger.info "Terminating workers"
+      logger.info 'Terminating workers'
       @processors.each(&:stop)
     end
 

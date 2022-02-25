@@ -6,10 +6,10 @@ module Cloudmunda
       def self.create(audience_url: Cloudmunda.audience)
         uri = Cloudmunda.auth_url
         payload = {
-          "grant_type":"client_credentials",
-          "audience": audience_url,
-          "client_id": Cloudmunda.client_id,
-          "client_secret": Cloudmunda.client_secret
+          grant_type: 'client_credentials',
+          audience: audience_url,
+          client_id: Cloudmunda.client_id,
+          client_secret: Cloudmunda.client_secret
         }
 
         create_by_uri(uri: uri, payload: payload)

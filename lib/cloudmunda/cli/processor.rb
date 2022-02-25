@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 module Cloudmunda
   class Processor
-
     attr_reader :client, :worker_class, :busy_count, :timer
 
-    def initialize(client: ::Cloudmunda.client, worker_class:)
+    def initialize(worker_class:, client: ::Cloudmunda.client)
       @client = client
       @worker_class = worker_class
       @busy_count = ::Concurrent::AtomicFixnum.new(0)
@@ -54,11 +55,11 @@ module Cloudmunda
         worker.complete_job(job)
 
         logger.info "class=#{worker_class} jid=#{job.key} Done processing #{job.type}"
-      rescue => exception
-        logger.info "class=#{worker_class} jid=#{job.key} Failed processing #{job.type}: #{exception.message}"
+      rescue StandardError => e
+        logger.info "class=#{worker_class} jid=#{job.key} Failed processing #{job.type}: #{e.message}"
 
-        worker.fail_job(job, reason: exception.message)
-        raise exception
+        worker.fail_job(job, reason: e.message)
+        raise e
       ensure
         busy_count.decrement
       end
@@ -70,7 +71,7 @@ module Cloudmunda
         worker: worker_name,
         timeout: worker_timeout * 1000,
         maxJobsToActivate: max_jobs_to_activate,
-        fetchVariable: worker_variables_to_fetch,
+        fetchVariable: worker_variables_to_fetch
       )
     end
 

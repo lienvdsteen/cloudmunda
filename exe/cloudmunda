@@ -1,14 +1,17 @@
 #!/usr/bin/env ruby
-require "bundler/setup"
-require "cloudmunda/cli"
+# frozen_string_literal: true
+
+require 'bundler/setup'
+require 'cloudmunda/cli'
 
 begin
   cli = ::Cloudmunda::CLI.instance
   cli.parse
   cli.run
-rescue => e
+rescue StandardError => e
   raise e if $DEBUG
-  STDERR.puts e.message
-  STDERR.puts e.backtrace.join("\n")
+
+  warn e.message
+  warn e.backtrace.join("\n")
   exit 1
 end

@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 module Cloudmunda
   module Configuration
-    VALID_OPTIONS_KEYS = %i[env require logger timeout zeebe_url auth_url client_id client_secret audience graphql_url].freeze
+    VALID_OPTIONS_KEYS = %i[env require logger timeout zeebe_url auth_url client_id client_secret audience
+                            graphql_url].freeze
     attr_accessor(*VALID_OPTIONS_KEYS)
 
     # Sets all configuration options to their default values when this module is extended.
@@ -20,9 +23,9 @@ module Cloudmunda
 
     # Resets all configuration options to the defaults.
     def reset
-      @env = ENV["APP_ENV"] || ENV["RAILS_ENV"] || ENV["RACK_ENV"] || "development"
+      @env = ENV['APP_ENV'] || ENV['RAILS_ENV'] || ENV['RACK_ENV'] || 'development'
       @logger = Logger.new($stdout)
-      @require = "."
+      @require = '.'
       @timeout = @env == 'development' ? 5 : 30
       @zeebe_url = ENV['ZEEBE_URL']
       @auth_url = ENV['ZEEBE_AUTHORIZATION_SERVER_URL']
