@@ -2,7 +2,7 @@ require 'json'
 
 module Cloudmunda
   module Worker
-    attr_accessor :client, :type, :max_jobs_to_activate, :poll_interval, :timeout, :variables
+    attr_accessor :client, :type, :max_jobs_to_activate, :poll_interval, :timeout, :variables, :runs_in_development
 
     def self.included(base)
       base.extend(ClassMethods)
@@ -148,6 +148,27 @@ module Cloudmunda
       # @return [Array<String, Symbol>]
       def get_variables_to_fetch
         @variables.to_a
+      end
+
+      # Sets if this service task runs in development mode or not.
+      #
+      # @example
+      #   class MyWorker
+      #     include ::Cloudmunda::Worker
+      #     runs_in_development true
+      #   end
+      #
+      # @param [Boolean] runs_in_development
+      # @return [Boolean]
+      def runs_in_development(runs_in_development)
+        @runs_in_development = runs_in_development
+      end
+
+      # Returns if this service task should run in development mode.
+      #
+      # @return [Boolean]
+      def get_runs_in_development
+        @runs_in_development || false
       end
 
       # Returns the worker's name.
