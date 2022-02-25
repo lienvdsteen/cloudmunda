@@ -9,7 +9,7 @@ module Cloudmunda
     end
 
     def start
-      @processors = workers.map do |worker_class|
+      workers.each do |worker_class|
         if ::Cloudmunda.env == 'development' && !worker_class.get_runs_in_development
           logger.info "Not starting a processor for worker #{worker_class.get_type} as it doesn't run in development."
           next
@@ -17,7 +17,7 @@ module Cloudmunda
 
         logger.info "Starting a processor for worker #{worker_class.get_type}"
         processor = ::Cloudmunda::Processor.new(worker_class: worker_class)
-        processor.start
+        @processors << processor.start
       end
     end
 
