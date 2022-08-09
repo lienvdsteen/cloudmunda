@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+## [0.1.3] - 2021-02-25
+- Fix bug in `Supervisor#start` that would lead to not gracefully shutting down workers.
+
 ## [0.1.2] - 2021-02-25
 - Add class method `runs_in_development` to Cloudmunda::Worker. This way you can run only specific jobs in development.
 
