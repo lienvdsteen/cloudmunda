@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cloudmunda (0.1.4)
+    cloudmunda (0.1.5)
       concurrent-ruby (~> 1.0)
       rest-client (~> 2.0)
       zeebe-client (~> 0.16)

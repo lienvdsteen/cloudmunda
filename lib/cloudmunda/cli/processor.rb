@@ -11,7 +11,6 @@ module Cloudmunda
       @timer = ::Concurrent::TimerTask.new(
         run_now: true,
         execution_interval: worker_poll_interval,
-        timeout_interval: worker_timeout
       ) { run }
     end
 
