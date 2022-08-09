@@ -57,7 +57,7 @@ module Cloudmunda
       #
       # @return [String]
       def get_type
-        @type
+        get_runs_in_development ? "#{@type}-dev" : @type
       end
 
       # Sets the maximum number of jobs to send to the worker for processing at once.
