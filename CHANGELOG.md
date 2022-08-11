@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.1.6] - 2022-08-11
+
+- Fix for 0.1.4 changes. This resulted in *only* running the `-dev` type and not the production type.
+
 ## [0.1.5] - 2022-08-09
 - Remove usage of Concurrent::TimerTask's timeout_interval since it has been deprecated.
 
