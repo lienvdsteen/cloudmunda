@@ -9,3 +9,7 @@ Style/Documentation:
 
 Layout/LineLength:
   Max: 120
+
+Metrics/AbcSize:
+  Exclude:
+    - db/migrate/*.rb

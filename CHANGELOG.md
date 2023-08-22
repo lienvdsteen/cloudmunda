@@ -1,5 +1,13 @@
 ## [Unreleased]
 
+- Remove runs_in_development mode
+
+## [0.2.0] - 2022-08-26
+
+**Breaking changes**
+
+- Removed Usertask API (moved to (better maintained gem)[https://github.com/lienvdsteen/camunda]).
+
 ## [0.1.6] - 2022-08-11
 
 - Fix for 0.1.4 changes. This resulted in *only* running the `-dev` type and not the production type.

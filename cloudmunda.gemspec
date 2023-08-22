@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'concurrent-ruby', '~> 1.0'
   spec.add_dependency 'rest-client', '~> 2.0'
-  spec.add_dependency 'zeebe-client', '~> 0.16'
+  spec.add_dependency 'zeebe-client', '~> 0.17.0'
   spec.metadata = {
     'rubygems_mfa_required' => 'true'
   }

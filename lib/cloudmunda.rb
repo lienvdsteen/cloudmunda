@@ -8,7 +8,6 @@ require_relative 'cloudmunda/cli/worker'
 require_relative 'cloudmunda/configuration'
 require_relative 'cloudmunda/api'
 require_relative 'cloudmunda/zeebe'
-require_relative 'cloudmunda/graphql'
 
 module Cloudmunda
   extend Configuration

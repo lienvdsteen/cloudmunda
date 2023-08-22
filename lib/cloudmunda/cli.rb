@@ -86,10 +86,6 @@ module Cloudmunda
           config.timeout = timeout
         end
 
-        # p.on "-v", "--verbose", "Print more verbose output" do |arg|
-        #   ::Cloudmuna.logger.level = ::Logger::DEBUG
-        # end
-
         p.on '-V', '--version', 'Print version and exit' do |_arg|
           puts "Cloudmunda #{::Cloudmunda::VERSION}"
           exit(0)

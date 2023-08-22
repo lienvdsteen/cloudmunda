@@ -10,7 +10,7 @@ module Cloudmunda
       @busy_count = ::Concurrent::AtomicFixnum.new(0)
       @timer = ::Concurrent::TimerTask.new(
         run_now: true,
-        execution_interval: worker_poll_interval,
+        execution_interval: worker_poll_interval
       ) { run }
     end
 

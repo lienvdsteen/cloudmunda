@@ -3,11 +3,11 @@
 module Cloudmunda
   module API
     class AccessToken < Cloudmunda::API::OAuthResource
-      def self.create(audience_url: Cloudmunda.audience)
+      def self.create
         uri = Cloudmunda.auth_url
         payload = {
           grant_type: 'client_credentials',
-          audience: audience_url,
+          audience: Cloudmunda.audience,
           client_id: Cloudmunda.client_id,
           client_secret: Cloudmunda.client_secret
         }

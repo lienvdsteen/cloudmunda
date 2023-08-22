@@ -2,8 +2,7 @@
 
 module Cloudmunda
   module Configuration
-    VALID_OPTIONS_KEYS = %i[env require logger timeout zeebe_url auth_url client_id client_secret audience
-                            graphql_url].freeze
+    VALID_OPTIONS_KEYS = %i[env require logger timeout zeebe_url auth_url client_id client_secret audience].freeze
     attr_accessor(*VALID_OPTIONS_KEYS)
 
     # Sets all configuration options to their default values when this module is extended.
@@ -32,7 +31,6 @@ module Cloudmunda
       @client_id = ENV['ZEEBE_CLIENT_ID']
       @client_secret = ENV['ZEEBE_CLIENT_SECRET']
       @audience = ENV['ZEEBE_AUDIENCE']
-      @graphql_url = ENV['GRAPHQL_URL']
     end
   end
 end

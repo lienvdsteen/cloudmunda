@@ -1,11 +1,6 @@
 # Cloudmunda
 
-This Ruby gem makes it easier to connect your Ruby (on Rails) app with Camunda Cloud. 🎉 
-
-The following is included:
-- Ruby workers for Zeebe
-- API wrapper for Camunda Cloud
-- graphQL wrapper Usertasks
+This Ruby gem makes it easier to connect your Ruby workers with Camunda Cloud. 🎉 
 
 To use this library you need:
 

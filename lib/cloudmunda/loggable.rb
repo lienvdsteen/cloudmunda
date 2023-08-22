@@ -11,7 +11,7 @@ module Cloudmunda
     end
 
     def setup_logger
-      @logger = Beez.config.logger
+      @logger = Cloudmunda.config.logger
     end
   end
 end
