@@ -46,21 +46,26 @@ module Cloudmunda
     end
 
     def process(job)
-      worker = worker_class.new(client)
-      begin
-        logger.info "class=#{worker_class} jid=#{job.key} Start processing #{job.type}"
+      ActiveRecord::Base.connection_pool.with_connection do |connection|
+        worker = worker_class.new(client)
+        begin
+          logger.info "class=#{worker_class} jid=#{job.key} Start processing #{job.type}"
 
-        worker.process(job)
-        worker.complete_job(job)
+          worker.process(job)
+          worker.complete_job(job)
 
-        logger.info "class=#{worker_class} jid=#{job.key} Done processing #{job.type}"
-      rescue StandardError => e
-        logger.info "class=#{worker_class} jid=#{job.key} Failed processing #{job.type}: #{e.message}"
+          logger.info "class=#{worker_class} jid=#{job.key} Done processing #{job.type}"
+        rescue StandardError => e
+          logger.info "class=#{worker_class} jid=#{job.key} Failed processing #{job.type}: #{e.message}"
 
-        worker.fail_job(job, reason: e.message)
-        raise e
+          worker.fail_job(job, reason: e.message)
+          raise e
+        ensure
+          busy_count.decrement
+        end
       ensure
-        busy_count.decrement
+        ActiveRecord::Base.clear_active_connections!
+        ActiveRecord::Base.connection.close
       end
     end
 
