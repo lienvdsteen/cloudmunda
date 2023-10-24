@@ -38,7 +38,6 @@ Cloudmunda.configure do |config|
   config.zeebe_url = ENV['ZEEBE_URL']
   config.auth_url = ENV['ZEEBE_AUTHORIZATION_SERVER_URL']
   config.audience = ENV['ZEEBE_AUDIENCE']
-  config.graphql_url = ENV['GRAPHQL_URL']
 end
 ```
 
@@ -89,7 +88,6 @@ Cloudmunda.configure do |config|
   config.zeebe_url = ENV['ZEEBE_URL']
   config.auth_url = ENV['ZEEBE_AUTHORIZATION_SERVER_URL']
   config.audience = ENV['ZEEBE_AUDIENCE']
-  config.graphql_url = ENV['GRAPHQL_URL']
 end
 ```
 
