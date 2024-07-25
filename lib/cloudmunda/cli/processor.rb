@@ -57,6 +57,7 @@ module Cloudmunda
           logger.info "class=#{worker_class} jid=#{job.key} Done processing #{job.type}"
         rescue StandardError => e
           logger.info "class=#{worker_class} jid=#{job.key} Failed processing #{job.type}: #{e.message}"
+          logger.info "Backtrace: #{e.backtrace.join("\n")}"
 
           worker.fail_job(job, reason: e.message)
           raise e
