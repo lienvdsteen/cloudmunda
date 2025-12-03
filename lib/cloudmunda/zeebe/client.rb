@@ -5,6 +5,8 @@ require 'zeebe/client'
 module Cloudmunda
   module Zeebe
     class Client
+      include ::Cloudmunda::Loggable
+
       attr_reader :client
 
       def initialize(url: ::Cloudmunda.zeebe_url)
@@ -16,7 +18,15 @@ module Cloudmunda
             ::Zeebe::Client::GatewayProtocol::ActivateJobsRequest.new(params))
       end
 
+      def cancel_process_instance(params = {})
+        run(:cancel_process_instance,
+            ::Zeebe::Client::GatewayProtocol::CancelProcessInstanceRequest.new(params))
+      end
+
+      # @deprecated Use {#cancel_process_instance} instead. This method is deprecated
+      #   as of Camunda 8.0 and will be removed in Camunda 8.10.
       def cancel_workflow_instance(params = {})
+        warn_deprecation('cancel_workflow_instance', 'cancel_process_instance')
         run(:cancel_workflow_instance,
             ::Zeebe::Client::GatewayProtocol::CancelWorkflowInstanceRequest.new(params))
       end
@@ -31,7 +41,17 @@ module Cloudmunda
             ::Zeebe::Client::GatewayProtocol::CreateProcessInstanceRequest.new(params))
       end
 
+      def deploy_resource(params = {})
+        run(:deploy_resource,
+            ::Zeebe::Client::GatewayProtocol::DeployResourceRequest.new(params))
+      end
+
+      # @deprecated Use {#deploy_resource} instead. The DeployProcess gRPC endpoint
+      #   was deprecated in Camunda 8.0 and will be removed in Camunda 8.10.
+      #   Note: Parameter structure has changed - use `resources` instead of `processes`,
+      #   and `content` instead of `definition`.
       def deploy_process(params = {})
+        warn_deprecation('deploy_process', 'deploy_resource')
         run(:deploy_process,
             ::Zeebe::Client::GatewayProtocol::DeployProcessRequest.new(params))
       end
@@ -78,10 +98,6 @@ module Cloudmunda
       rescue ::GRPC::Unavailable => e
         logger.error e.message
         raise e
-      end
-
-      def logger
-        # ::Cloudmunda.logger
       end
 
       def authentication_headers

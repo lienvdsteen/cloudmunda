@@ -1,6 +1,20 @@
 ## [Unreleased]
 
-- Remove runs_in_development mode
+## [0.3.0] - 2025-12-03
+
+**Camunda 8.8 Compatibility Updates**
+
+- Added `deploy_resource` method to replace deprecated `deploy_process` (will be removed in Camunda 8.10)
+- Added `cancel_process_instance` method to replace deprecated `cancel_workflow_instance` (deprecated since Camunda 8.0)
+- Added deprecation warnings for `deploy_process` and `cancel_workflow_instance` methods
+- Added `warn_deprecation` utility method to `Loggable` module
+- Updated README with Camunda 8.8 compatibility notes and migration guide
+- Note: `deploy_resource` uses different parameters: `resources` (not `processes`) with `content` (not `definition`) field
+
+**Migration Guide:**
+- Replace `deploy_process(processes: [{name: "x", definition: data}])` with `deploy_resource(resources: [{name: "x.bpmn", content: data}])`
+- Replace `cancel_workflow_instance` calls with `cancel_process_instance`
+- Update your code before upgrading to Camunda 8.10 where deprecated methods will be removed
 
 ## [0.2.0] - 2022-08-26
 
