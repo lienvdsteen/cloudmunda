@@ -43,6 +43,57 @@ end
 
 The values listed above are the default values that you can override.
 
+## Camunda 8.8 Compatibility
+
+This gem is compatible with Camunda 8.8 and includes support for both current and deprecated gRPC endpoints. Starting with version 0.3.0, deprecation warnings are emitted when using methods that will be removed in Camunda 8.10.
+
+### Deprecated Methods
+
+The following methods are deprecated and will be removed in Camunda 8.10:
+
+- `deploy_process` → Use `deploy_resource` instead
+- `cancel_workflow_instance` → Use `cancel_process_instance` instead
+
+### Migration Guide
+
+#### Deploying Resources
+
+**Old (deprecated):**
+```ruby
+Cloudmunda.client.deploy_process(
+  processes: [
+    {name: "demo", definition: File.read('diagrams/demo.bpmn')}
+  ]
+)
+```
+
+**New (recommended):**
+```ruby
+Cloudmunda.client.deploy_resource(
+  resources: [
+    {name: "demo.bpmn", content: File.read('diagrams/demo.bpmn')}
+  ]
+)
+```
+
+**Key differences:**
+- Parameter changed from `processes` to `resources`
+- Field changed from `definition` to `content`
+- Include file extension in the `name` field
+- `deploy_resource` supports multiple resource types (BPMN, DMN, Forms)
+
+#### Canceling Process Instances
+
+**Old (deprecated):**
+```ruby
+Cloudmunda.client.cancel_workflow_instance(processInstanceKey: 12345)
+```
+
+**New (recommended):**
+```ruby
+Cloudmunda.client.cancel_process_instance(processInstanceKey: 12345)
+```
+
 ## Example Usage
 
 This section will explain the usage as you were using a Rails application, but steps should be very similar within plain
@@ -107,7 +158,17 @@ You can either import the [bpmn model example](/diagrams/demo.bpmn) as a diagram
 use the UI to deploy or you can start a console (`rails console`) and deploy the diagram with the gem.
 
 ```ruby
-Cloudmunda.client.deploy_process(processes: [name: "demo", definition: File.read('diagrams/demo.bpmn')])
+# Recommended method (Camunda 8.8+)
+Cloudmunda.client.deploy_resource(
+  resources: [
+    {name: "demo.bpmn", content: File.read('diagrams/demo.bpmn')}
+  ]
+)
+
+# Legacy method (deprecated, will be removed in Camunda 8.10)
+# Cloudmunda.client.deploy_process(
+#   processes: [{name: "demo", definition: File.read('diagrams/demo.bpmn')}]
+# )
 ```
 
 ### Create a worker
